@@ -3,12 +3,32 @@ package com.mastek.hrapp.services;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.mastek.hrapp.apis.DepartmentAPI;
+import com.mastek.hrapp.dao.DepartmentJPADAO;
+import com.mastek.hrapp.dao.EmployeeJPADAO;
+import com.mastek.hrapp.dao.JobPositionsDAO;
+import com.mastek.hrapp.dao.ProjectJPADAO;
+import com.mastek.hrapp.entities.Department;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
-public class DepartmentService {
+public class DepartmentService implements DepartmentAPI {
+	
+	@Autowired
+	EmployeeJPADAO empDAO;
+	
+	@Autowired
+	DepartmentJPADAO deptDAO;
+	
+	@Autowired
+	ProjectJPADAO projectDAO;
+	
+	@Autowired
+	JobPositionsDAO jobsDAO;
 String exampleProperty;
 	
 	public DepartmentService() {
@@ -37,6 +57,24 @@ String exampleProperty;
 	public void setExampleProperty(String exampleProperty) {
 		System.out.println("Example Property Set :"+exampleProperty);
 		this.exampleProperty = exampleProperty;
+	}
+
+	@Override
+	public Iterable<Department> listAllDepartments() {
+		System.out.println("Listing All Departments");
+		return deptDAO.findAll();
+	}
+
+	@Override
+	public Department findByDeptno(int deptno) {
+		
+		return deptDAO.findById(deptno).get();
+	}
+
+	@Override
+	public Department registerNewDepartment(Department newDepartment) {
+		newDepartment = deptDAO.save(newDepartment);
+		return newDepartment;
 	}
 	
 }

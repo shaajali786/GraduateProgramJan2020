@@ -3,14 +3,34 @@ package com.mastek.hrapp.services;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.mastek.hrapp.apis.ProjectAPI;
+import com.mastek.hrapp.dao.DepartmentJPADAO;
+import com.mastek.hrapp.dao.EmployeeJPADAO;
+import com.mastek.hrapp.dao.JobPositionsDAO;
+import com.mastek.hrapp.dao.ProjectJPADAO;
+import com.mastek.hrapp.entities.Employee;
+import com.mastek.hrapp.entities.Project;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 @Component
 @Scope("singleton")
-public class ProjectService {
+public class ProjectService implements ProjectAPI {
+	@Autowired
+	EmployeeJPADAO empDAO;
+	
+	@Autowired
+	DepartmentJPADAO deptDAO;
+	
+	@Autowired
+	ProjectJPADAO projectDAO;
+	
+	@Autowired
+	JobPositionsDAO jobsDAO;
 	
 String exampleProperty;
 	
@@ -40,6 +60,24 @@ String exampleProperty;
 	public void setExampleProperty(String exampleProperty) {
 		System.out.println("Example Property Set :"+exampleProperty);
 		this.exampleProperty = exampleProperty;
+	}
+
+	@Override
+	public Iterable<Project> listAllProjects() {
+		System.out.println("listing all projects");
+		return projectDAO.findAll();
+	}
+
+	@Override
+	public Project findByproId(int proid) {
+		
+		return projectDAO.findById(proid).get();
+	}
+
+	@Override
+	public Project registerNewProject(Project newProject) {
+		newProject = projectDAO.save(newProject);
+		return newProject;
 	}
 	
 }

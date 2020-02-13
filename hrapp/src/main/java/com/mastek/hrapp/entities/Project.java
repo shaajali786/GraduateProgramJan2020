@@ -10,18 +10,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.ws.rs.FormParam;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name="JPA_Projects")
 public class Project {
 	
 		int proId;
+		@FormParam("name")
 		String name;
+		
+		@FormParam("customerName")
 		String customerName;
 	
 		Set<Employee> projectTeam = new HashSet<>();
 	
 		@ManyToMany(mappedBy="projectsAssigned")// provide the property in employee with @ManyToMany
+		@XmlTransient// this ignore the association property when shared via service
 		public Set<Employee> getProjectTeam() {
 			return projectTeam;
 		}

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.mastek.hrapp.apis.EmployeeAPI;
 import com.mastek.hrapp.dao.DepartmentJPADAO;
 import com.mastek.hrapp.dao.EmployeeJPADAO;
 import com.mastek.hrapp.dao.JobPositionsDAO;
@@ -22,7 +23,7 @@ import com.mastek.hrapp.entities.Project;
 @Scope("singleton") // if it is 'singleton' then it is one object used across test cases
 					// if we use 'prototype' then it is one object per request
 
-public class EmployeeService {
+public class EmployeeService implements EmployeeAPI {
 
 	String exampleProperty;
 	
@@ -102,6 +103,24 @@ public class EmployeeService {
 		
 		job = jobsDAO.save(job);
 		return job;
+	}
+
+	@Override // for displaying on the web site
+	public Iterable<Employee> listAllEmployees() {
+		System.out.println("Listing all Employees");
+		return empDAO.findAll();
+	}
+
+	@Override
+	public Employee findByEmpno(int empno) {
+		
+		return empDAO.findById(empno).get();
+	}
+
+	@Override
+	public Employee registerNewEmployee(Employee newEmployee) {
+		newEmployee = empDAO.save(newEmployee);
+		return newEmployee;
 	}
 	
 	
