@@ -1,5 +1,5 @@
 package com.mastek.hrapp;
-
+// this file is used to execute the application
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

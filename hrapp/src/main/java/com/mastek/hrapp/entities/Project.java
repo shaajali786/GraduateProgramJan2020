@@ -17,7 +17,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name="JPA_Projects")
 public class Project {
 	
-		int proId;
+		int projectId;
+		
 		@FormParam("name")
 		String name;
 		
@@ -44,10 +45,10 @@ public class Project {
 		@Column(name= "project_number")
 		@GeneratedValue(strategy=GenerationType.AUTO)
 		public int getProjectId() {
-			return proId;
+			return projectId;
 		}
 		public void setProjectId(int projectId) {
-			this.proId = projectId;
+			this.projectId = projectId;
 		}
 		@Column(name="name", length=50,nullable=false)
 		public String getName() {
@@ -65,13 +66,13 @@ public class Project {
 		}
 		@Override
 		public String toString() {
-			return "Project [projectId=" + proId + ", name=" + name + ", customerName=" + customerName + "]";
+			return "Project [projectId=" + projectId + ", name=" + name + ", customerName=" + customerName + "]";
 		}
 		@Override
 		public int hashCode() {
 			final int prime = 31;
 			int result = 1;
-			result = prime * result + proId;
+			result = prime * result + projectId;
 			return result;
 		}
 		@Override
@@ -83,7 +84,7 @@ public class Project {
 			if (getClass() != obj.getClass())
 				return false;
 			Project other = (Project) obj;
-			if (proId != other.proId)
+			if (projectId != other.projectId)
 				return false;
 			return true;
 		}

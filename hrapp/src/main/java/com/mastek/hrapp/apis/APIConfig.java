@@ -20,6 +20,9 @@ public class APIConfig
 		
 		register(ProjectService.class);
 		
+		register(CORSFilter.class);
+		// this will enable the CORS filter for UI applications to access the service  (to be used with API)
+		
 	}
 	
 	
